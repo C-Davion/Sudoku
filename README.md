@@ -1,2 +1,2 @@
 # Sudoku
-Small implementation of sudoko in python without advanceded gaming libraries.
+Small implementation of sudoku in python without advanceded gaming libraries.
