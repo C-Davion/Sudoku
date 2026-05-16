@@ -11,10 +11,16 @@ class SudokuSolver :
     def is_cell_empty(self, i:int, j:int):
         return self.grid[i][j] == 0
 
-### ici il y a des choses à changer ###
+
     def row_is_valid(self, i:int):
         assert i<=8 and i>=0
         row = self.grid[i]
+        numbers_in_row = set()
+        for num in row:
+            if num != 0:
+                if num in numbers_in_row:
+                    return False
+                numbers_in_row.add(num)
         if 0 in row:
             return True
         return np.sum(row) == 45 and len(set(row)) == 9
@@ -23,14 +29,20 @@ class SudokuSolver :
     def column_is_valid(self, j:int):
         assert j<=8 and j>=0
         column = self.grid[:, j]
+        numbers_in_column = set()
+        for num in column:
+            if num != 0:
+                if num in numbers_in_column:
+                    return False
+                numbers_in_column.add(num)
         if 0 in column:
             return True
         return np.sum(column) == 45 and len(set(column)) == 9
 
-    def three_by_three_is_valid(self,i):
+    def three_by_three_is_valid(self, i:int):
         
         '''
-        Thre three by three are numbered as follows:
+        The three by three are numbered as follows:
         0 1 2
         3 4 5
         6 7 8
@@ -42,7 +54,7 @@ class SudokuSolver :
             for n in range(index_j*3,index_j*3+3): #get the col index
                 temp.append(self.grid[m,n])
         return np.sum(np.array(temp))==45 and len(set(temp))==9
-### fin des choses à changer ###
+
 
 
     def sudoku_is_valid(self):
