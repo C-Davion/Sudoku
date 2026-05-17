@@ -4,7 +4,7 @@ import numpy as np
 
 
 class SudokuSolver :
-    def __init__(self, grid):
+    def __init__(self, grid=np.zeros(9,9)):
         self.grid = grid
 
     
@@ -69,7 +69,7 @@ class SudokuSolver :
 
     def placeable_digits(self, i, j):
         if not self.is_cell_empty(i, j):
-            return set()  
+            return None 
         
         digits = set(range(1, 10))
         digits_copy = digits.copy()
