@@ -53,6 +53,8 @@ class SudokuSolver :
         for m in range (index_i*3,index_i*3+3): #get the rows index
             for n in range(index_j*3,index_j*3+3): #get the col index
                 temp.append(self.grid[m,n])
+        if 0 in temp:
+            return True
         return np.sum(np.array(temp))==45 and len(set(temp))==9
 
 
