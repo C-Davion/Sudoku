@@ -3,6 +3,7 @@ import numpy as np
 
 
 
+
 class SudokuSolver :
     def __init__(self, grid=np.zeros(9,9)):
         self.grid = grid
@@ -38,6 +39,7 @@ class SudokuSolver :
         if 0 in column:
             return True
         return np.sum(column) == 45 and len(set(column)) == 9
+
 
     def three_by_three_is_valid(self, i:int):
         

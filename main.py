@@ -109,6 +109,11 @@ class Sudoku :
         self.canvas.itemconfigure(tid, text=str(value) if value != 0 else '')
 
 
+### faire le bouton controle z ici ###
+class Workstate:
+    def __init__(self):
+        print("Hello World")
+
 
 if __name__ == "__main__":
     root = tk.Tk()
