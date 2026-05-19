@@ -1,10 +1,12 @@
 import tkinter as tk
 import numpy as np
+from copy import deepcopy
 
 
 class Sudoku :
     def __init__(self,root):
-         self.grid=np.zeros((9,9), dtype=int)
+         self.grid=[np.zeros((9,9), dtype=int)]
+         self.current_grid=0
          self.root=root
          self.default_cell_color = 'white'
          self.selected_cell_color = "#82cdff"
@@ -13,11 +15,11 @@ class Sudoku :
     def setup(self): 
         for i in range(9):
             for j in range(9):
-                   self.grid[i][j]= (i//3 *3)+j//3 + 1
+                   self.grid[self.current_grid][i][j]= (i//3 *3)+j//3 + 1
 
 
     def display(self):
-        print(self.grid)
+        print(self.grid[self.current_grid])
 
 
     def GUI(self):
@@ -49,7 +51,7 @@ class Sudoku :
             for c in range(9):
                 x = c * self.cell_size + self.cell_size // 2
                 y = r * self.cell_size + self.cell_size // 2
-                value = self.grid[r][c]
+                value = self.grid[self.current_grid][r][c]
                 text = str(value) if value != 0 else ''
                 tid = self.canvas.create_text(x, y, text=text, font=('Arial', 18))
                 self.text_ids[r][c] = tid
@@ -94,6 +96,14 @@ class Sudoku :
         if 0 <= row < 9 and 0 <= col < 9:
             self.select_cell(row, col)
     
+    def ctrl_z(self,event): #a modifier pour le boutton
+        self.current_grid-=1
+    def ctrl_y(self,event): #idem, a modifier pour le boutton
+        if self.current_grid<len(self.grid):
+            self.current_grid+=1
+        else:
+            pass
+            #diplay already at last step
 
     def set_number(self, value):
         """Change the value in the selected cell to the specified value."""
@@ -102,8 +112,11 @@ class Sudoku :
             return
 
         row, col = self.selected_cell
+        new_grid=deepcopy(self.grid[self.current_grid])
         # Update the matrix
-        self.grid[row][col] = value
+        new_grid[row][col] = value
+        self.grid=self.grid[:self.current_grid+1].append(new_grid) #to drop the states if ever an undo happened.
+        self.current_grid+=1
         # Update canvas text
         tid = self.text_ids[row][col]
         self.canvas.itemconfigure(tid, text=str(value) if value != 0 else '')
@@ -112,7 +125,8 @@ class Sudoku :
 ### faire le bouton controle z ici ###
 class Workstate:
     def __init__(self):
-        print("Hello World")
+        game_state=[] #tracks all moves
+        curr_state=0 #
 
 
 if __name__ == "__main__":
